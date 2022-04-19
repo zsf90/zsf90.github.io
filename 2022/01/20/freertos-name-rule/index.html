@@ -1,0 +1,258 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>FreeRTOS 命名规则 | 信念D力量</title><meta name="keywords" content="FreeRTOS,命名规则"><meta name="author" content="信念D力量"><meta name="copyright" content="信念D力量"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这篇文章用来记录 FreeRTOS 的命名规则。 1. 数据类型 在 FreeRTOS 中，使用的数据类型虽然都是标准 C 里面的数据类型，但是针对不同的处理器，对标准 C 的数据类型又进行了重定义，给它们取了一个新的名字，比如 char 重新定义了一个名字 portCHAR，这里面的 port 表示接口的意思，就是 FreeRTOS 要移植到这些处理器上需要这些接口文件来把它们连接在一起。但是用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FreeRTOS 命名规则">
+<meta property="og:url" content="https://zsf90.github.io/2022/01/20/freertos-name-rule/index.html">
+<meta property="og:site_name" content="信念D力量">
+<meta property="og:description" content="这篇文章用来记录 FreeRTOS 的命名规则。 1. 数据类型 在 FreeRTOS 中，使用的数据类型虽然都是标准 C 里面的数据类型，但是针对不同的处理器，对标准 C 的数据类型又进行了重定义，给它们取了一个新的名字，比如 char 重新定义了一个名字 portCHAR，这里面的 port 表示接口的意思，就是 FreeRTOS 要移植到这些处理器上需要这些接口文件来把它们连接在一起。但是用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zsf90.github.io/images/cover/006.jpg">
+<meta property="article:published_time" content="2022-01-20T13:41:03.000Z">
+<meta property="article:modified_time" content="2022-04-19T15:53:22.775Z">
+<meta property="article:author" content="信念D力量">
+<meta property="article:tag" content="FreeRTOS">
+<meta property="article:tag" content="命名规则">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zsf90.github.io/images/cover/006.jpg"><link rel="shortcut icon" href="/images/favicon.ico"><link rel="canonical" href="https://zsf90.github.io/2022/01/20/freertos-name-rule/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'FreeRTOS 命名规则',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-04-19 23:53:22'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.1.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/z-logo.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">信念D力量</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">FreeRTOS 命名规则</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-01-20T13:41:03.000Z" title="发表于 2022-01-20 21:41:03">2022-01-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-04-19T15:53:22.775Z" title="更新于 2022-04-19 23:53:22">2022-04-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="FreeRTOS 命名规则"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><article class="post-content" id="article-container"><p>这篇文章用来记录 <strong>FreeRTOS</strong> 的命名规则。</p>
+<h2 id="1-数据类型"><a href="#1-数据类型" class="headerlink" title="1. 数据类型"></a>1. 数据类型</h2><blockquote>
+<p>在 FreeRTOS 中，使用的数据类型虽然都是标准 C 里面的数据类型，但是针对不同的处理器，对标准 C 的<br>数据类型又进行了重定义，给它们取了一个新的名字，比如 char 重新定义了一个名字 portCHAR，这里面<br>的 port 表示接口的意思，就是 FreeRTOS 要移植到这些处理器上需要这些接口文件来把它们连接在一起。<br>但是用户在写程序的时候并非一定要遵循 FreeRTOS 的风格，我们还是可以直接用 C 语言的标准类型。在<br>FreeRTOS 中，int 型从不使用，只使用 short 和 long 型。在 Cortex-M 内核的 MCU 中，short 为 16 位，<br>long 为 32 位。</p>
+</blockquote>
+<p>FreeRTOS 中详细的数据类型重定义在 portmacro.h 这个头文件中实现，具体汇总见表FreeRTOS 中的数据类型重定义 和代码清单:FreeRTOS 中的数据类型重定义。</p>
+<table>
+<thead>
+<tr>
+<th>新定义的数据类型实际的</th>
+<th>实际的数据类型（C 标准类型</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>portCHAR</td>
+<td>char</td>
+<td></td>
+</tr>
+<tr>
+<td>portSHORT</td>
+<td>short</td>
+<td></td>
+</tr>
+<tr>
+<td>portLONG</td>
+<td>long</td>
+<td></td>
+</tr>
+<tr>
+<td>portTickType</td>
+<td>unsigned shortint</td>
+<td>用于定义系统时基计数器的值<br/>和 阻 塞 时 间 的 值。 当 FreeRTOSConfig.h 头 文 件 中 的 宏<br/>configUSE_16_BI T_TICKS 为 1 时则为 16 位。</td>
+</tr>
+<tr>
+<td></td>
+<td>unsigned int</td>
+<td>用 于 定 义 系 统 时 基 计 数 器 的<br/>值 和 阻 塞 时 间 的 值。FreeRTOSConfig.h 头 文 件 中 的 宏<br/>configUSE_16_BI T_TICKS 为 1 时则为 32 位。</td>
+</tr>
+<tr>
+<td>portBASE_TYPE</td>
+<td>long</td>
+<td>根据处理器的架构来决定是多少<br/>位的，如果是 32&#x2F;16&#x2F;8bit 的处理<br/>器则是 32&#x2F;16&#x2F;8bit 的数据类型。<br/>一般用于定义函数的返回值或者<br/>布尔类型。</td>
+</tr>
+</tbody></table>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> portCHAR char</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> portFLOAT float</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> portDOUBLE double</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> portLONG long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> portSHORT short</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> portSTACK_TYPE uint32_t</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> portBASE_TYPE long</span></span><br><span class="line"><span class="keyword">typedef</span> portSTACK_TYPE StackType_t;</span><br><span class="line">typedeflong BaseType_t;</span><br><span class="line">typedefunsigned <span class="type">long</span> UBaseType_t;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">if</span>( configUSE_16_BIT_TICKS == 1 )</span></span><br><span class="line"><span class="type">typedefuint16_t</span> TickType_t;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> portMAX_DELAY ( TickType_t ) 0xffff</span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="type">typedefuint32_t</span> TickType_t;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> portMAX_DELAY ( TickType_t ) 0xffffffffUL</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-变量命名"><a href="#2-变量命名" class="headerlink" title="2. 变量命名"></a>2. 变量命名</h2><p>在 FreeRTOS 中，定义变量的时候往往会把变量的类型当作前缀加在变量上，这样的好处是让用户一看到这个变量就知道该变量的类型。比如 char 型变量的前缀是 c，short 型变量的前缀是 s，long 型变量的前缀是l，portBASE_TYPE 类型变量的前缀是 x。还有其他的数据类型，比如数据结构，任务句柄，队列句柄等定义的变量名的前缀也是 x。</p>
+<p>如果一个变量是无符号型的那么会有一个前缀 u，如果是一个指针变量则会有一个前缀 p。因此，当我们定义一个无符号的 char 型变量的时候会加一个 uc 前缀，当定义一个 char 型的指针变量的时候会有一个 pc 前缀。</p>
+<h2 id="3-函数名"><a href="#3-函数名" class="headerlink" title="3. 函数名"></a>3. 函数名</h2><p>函数名包含了函数返回值的类型、函数所在的文件名和函数的功能，如果是私有的函数则会加一个 prv（private）的前缀。特别的，在函数名中加入了函数所在的文件名，这大大的帮助了用户提高找函数定义的效率和了解函数作用的目的，具体的举例如下：</p>
+<ol>
+<li><p>vTaskPrioritySet() 函数的返回值为 void 型，在 task.c 这个文件中定义。</p>
+</li>
+<li><p>xQueueReceive() 函数的返回值为 portBASE_TYPE 型，在 queue.c 这个文件中定义。</p>
+</li>
+<li><p>vSemaphoreCreateBinary() 函数的返回值为 void 型，在 semphr.h 这个文件中定义。</p>
+</li>
+</ol>
+<h2 id="4-宏"><a href="#4-宏" class="headerlink" title="4. 宏"></a>4. 宏</h2><p>宏均是由大写字母表示，并配有小写字母的前缀，前缀用于表示该宏在哪个头文件定义，部分举例具体见下表。</p>
+<table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>宏定义的头文件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>port (举例, portMAX_DELAY)</td>
+<td>portable.h</td>
+</tr>
+<tr>
+<td>task (举例, taskENTER_CRITICAL())</td>
+<td>task.h</td>
+</tr>
+<tr>
+<td>pd (举例, pdTRUE)</td>
+<td>projdefs.h</td>
+</tr>
+<tr>
+<td>config(举例, configUSE_PREEMPTION)</td>
+<td>FreeRTOSConfig.h</td>
+</tr>
+<tr>
+<td>err (举例, errQUEUE_FULL)</td>
+<td>projdefs.h</td>
+</tr>
+</tbody></table>
+<p><code>这里有个地方要注意的是信号量的函数都是一个宏定义，但是它的函数的命名方法是遵循函数的命名方法而不是宏定义的方法。</code></p>
+<p>在贯穿 FreeRTOS 的整个代码中，还有几个通用的宏定义我们也要注意下，都是表示 0 和 1 的宏，具体见下表。</p>
+<table>
+<thead>
+<tr>
+<th>宏</th>
+<th>实际的值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>pdTRUE</td>
+<td>1</td>
+</tr>
+<tr>
+<td>pdFALSE</td>
+<td>0</td>
+</tr>
+<tr>
+<td>pdPASS</td>
+<td>1</td>
+</tr>
+<tr>
+<td>pdFAIL</td>
+<td>0</td>
+</tr>
+</tbody></table>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">信念D力量</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://zsf90.github.io/2022/01/20/freertos-name-rule/">https://zsf90.github.io/2022/01/20/freertos-name-rule/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://zsf90.github.io" target="_blank">信念D力量</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/FreeRTOS/">FreeRTOS</a><a class="post-meta__tags" href="/tags/%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99/">命名规则</a></div><div class="post_share"><div class="social-share" data-image="/images/cover/006.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/01/23/freertos-list/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/cover/006.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">FreeRTOS 链表</div></div></a></div><div class="next-post pull-right"><a href="/2022/01/18/freertos-function-list/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/cover/006.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">FreeRTOS 函数列表</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/01/18/freertos-function-list/" title="FreeRTOS 函数列表"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/cover/006.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-18</div><div class="title">FreeRTOS 函数列表</div></div></a></div><div><a href="/2022/01/23/freertos-list/" title="FreeRTOS 链表"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/cover/006.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-23</div><div class="title">FreeRTOS 链表</div></div></a></div><div><a href="/2022/01/18/freertos/" title="FreeRTOS 移植"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/cover/006.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-18</div><div class="title">FreeRTOS 移植</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/z-logo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">信念D力量</div><div class="author-info__description"></div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/zsf90"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://space.bilibili.com/334715750" target="_blank" title="哔哩哔哩"><i class="fab fa-bilibili"></i></a><a class="social-icon" href="mailto:freerealmshn@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://github.com/zsf90" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是我的个人博客</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">1. 数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%8F%98%E9%87%8F%E5%91%BD%E5%90%8D"><span class="toc-text">2. 变量命名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%87%BD%E6%95%B0%E5%90%8D"><span class="toc-text">3. 函数名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%AE%8F"><span class="toc-text">4. 宏</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/04/20/c-language-bcjq/" title="C语言编程技巧"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/cover/009.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言编程技巧"/></a><div class="content"><a class="title" href="/2022/04/20/c-language-bcjq/" title="C语言编程技巧">C语言编程技巧</a><time datetime="2022-04-19T16:05:41.000Z" title="发表于 2022-04-20 00:05:41">2022-04-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/19/hello-world/" title="Hello World"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/0005.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/2022/04/19/hello-world/" title="Hello World">Hello World</a><time datetime="2022-04-19T15:53:22.785Z" title="发表于 2022-04-19 23:53:22">2022-04-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/12/c-language-hash-table/" title="C 语言哈希表"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/cover/008.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C 语言哈希表"/></a><div class="content"><a class="title" href="/2022/04/12/c-language-hash-table/" title="C 语言哈希表">C 语言哈希表</a><time datetime="2022-04-11T17:02:12.000Z" title="发表于 2022-04-12 01:02:12">2022-04-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/11/stm32-ec11-demo/" title="STM32 EC11 旋转编码器软件肖抖示例"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/cover/007.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="STM32 EC11 旋转编码器软件肖抖示例"/></a><div class="content"><a class="title" href="/2022/04/11/stm32-ec11-demo/" title="STM32 EC11 旋转编码器软件肖抖示例">STM32 EC11 旋转编码器软件肖抖示例</a><time datetime="2022-04-10T16:23:47.000Z" title="发表于 2022-04-11 00:23:47">2022-04-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/10/npm-%E5%91%BD%E4%BB%A4%E7%AC%94%E8%AE%B0/" title="npm 命令笔记"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/cover/nodejs.svg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="npm 命令笔记"/></a><div class="content"><a class="title" href="/2022/04/10/npm-%E5%91%BD%E4%BB%A4%E7%AC%94%E8%AE%B0/" title="npm 命令笔记">npm 命令笔记</a><time datetime="2022-04-10T06:04:21.000Z" title="发表于 2022-04-10 14:04:21">2022-04-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 信念D力量</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

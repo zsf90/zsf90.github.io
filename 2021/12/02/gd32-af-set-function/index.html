@@ -1,0 +1,200 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>GD32 gpio_af_set() 函数 | 信念D力量</title><meta name="keywords" content="GD32"><meta name="author" content="信念D力量"><meta name="copyright" content="信念D力量"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这篇文章来看看 GD32 给我们提供的 gpio_af_set() 函数吧。该函数的功能是配置 GPIO的复用功能，如：可以配置某个IO位串口的Tx或Rx等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GD32 gpio_af_set() 函数">
+<meta property="og:url" content="https://zsf90.github.io/2021/12/02/gd32-af-set-function/index.html">
+<meta property="og:site_name" content="信念D力量">
+<meta property="og:description" content="这篇文章来看看 GD32 给我们提供的 gpio_af_set() 函数吧。该函数的功能是配置 GPIO的复用功能，如：可以配置某个IO位串口的Tx或Rx等。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zsf90.github.io/images/cover/004.jpg">
+<meta property="article:published_time" content="2021-12-02T13:31:47.000Z">
+<meta property="article:modified_time" content="2022-04-19T15:53:22.775Z">
+<meta property="article:author" content="信念D力量">
+<meta property="article:tag" content="GD32">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zsf90.github.io/images/cover/004.jpg"><link rel="shortcut icon" href="/images/favicon.ico"><link rel="canonical" href="https://zsf90.github.io/2021/12/02/gd32-af-set-function/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'GD32 gpio_af_set() 函数',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-04-19 23:53:22'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.1.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/z-logo.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">信念D力量</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">GD32 gpio_af_set() 函数</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-02T13:31:47.000Z" title="发表于 2021-12-02 21:31:47">2021-12-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-04-19T15:53:22.775Z" title="更新于 2022-04-19 23:53:22">2022-04-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="GD32 gpio_af_set() 函数"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><article class="post-content" id="article-container"><p>这篇文章来看看 GD32 给我们提供的 gpio_af_set() 函数吧。该函数的功能是配置 GPIO的复用功能，如：可以配置某个IO位串口的Tx或Rx等。</p>
+<span id="more"></span>
+
+<h2 id="函数实现"><a href="#函数实现" class="headerlink" title="函数实现"></a>函数实现</h2><p>文件位置：gd32f1x0_gpio.c</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*!</span></span><br><span class="line"><span class="comment">    \brief      set GPIO alternate function</span></span><br><span class="line"><span class="comment">    \param[in]  gpio_periph: GPIOx(x = A,B,C,D,F) </span></span><br><span class="line"><span class="comment">                only one parameter can be selected which is shown as below:</span></span><br><span class="line"><span class="comment">      \arg        GPIOx(x = A,B,C,D,F)</span></span><br><span class="line"><span class="comment">    \param[in]  alt_func_num: GPIO pin af function, please refer to specific device datasheet</span></span><br><span class="line"><span class="comment">                only one parameter can be selected which is shown as below:</span></span><br><span class="line"><span class="comment">      \arg        GPIO_AF_0: TIMER2, TIMER13, TIMER14, TIMER16, SPI0, I2S0, SPI1, SPI2, I2S2, CK_OUT, </span></span><br><span class="line"><span class="comment">                             SWDIO, SWCLK, USART0, CEC, IFRP, I2C0, I2C1, TSI, EVENTOUT</span></span><br><span class="line"><span class="comment">      \arg        GPIO_AF_1: USART0, USART1, IFRP, CEC, TIMER2, TIMER14, I2C0, I2C1, I2C2, EVENTOUT</span></span><br><span class="line"><span class="comment">      \arg        GPIO_AF_2: TIMER0, TIMER1, TIMER15, TIMER16, EVENTOUT</span></span><br><span class="line"><span class="comment">      \arg        GPIO_AF_3: TSI, I2C0, TIMER14, EVENTOUT</span></span><br><span class="line"><span class="comment">      \arg        GPIO_AF_4(port A,B only): TIMER13, I2C0, I2C1, I2C2, USART1</span></span><br><span class="line"><span class="comment">      \arg        GPIO_AF_5(port A,B only): TIMER15, TIMER16, SPI2, I2S2, I2C0, I2C1</span></span><br><span class="line"><span class="comment">      \arg        GPIO_AF_6(port A,B only): SPI1, EVENTOUT </span></span><br><span class="line"><span class="comment">      \arg        GPIO_AF_7(port A only): CMP0, CMP1</span></span><br><span class="line"><span class="comment">      \arg        GPIO_AF_9(port A,B only): CAN0, CAN1 (only for GD32F170/F190 series)</span></span><br><span class="line"><span class="comment">      \arg        GPIO_AF_11: SLCD (only for GD32F170/F190 series)</span></span><br><span class="line"><span class="comment">    \param[in]  pin: GPIO pin</span></span><br><span class="line"><span class="comment">                one or more parameters can be selected which are shown as below:</span></span><br><span class="line"><span class="comment">      \arg        GPIO_PIN_x(x=0..15), GPIO_PIN_ALL</span></span><br><span class="line"><span class="comment">    \param[out] none</span></span><br><span class="line"><span class="comment">    \retval     none</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">gpio_af_set</span><span class="params">(<span class="type">uint32_t</span> gpio_periph, <span class="type">uint32_t</span> alt_func_num, <span class="type">uint32_t</span> pin)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">uint16_t</span> i;</span><br><span class="line">    <span class="type">uint32_t</span> afrl, afrh;</span><br><span class="line"></span><br><span class="line">    afrl = GPIO_AFSEL0(gpio_periph);</span><br><span class="line">    afrh = GPIO_AFSEL1(gpio_periph);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0U</span>;i &lt; <span class="number">8U</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>((<span class="number">1U</span> &lt;&lt; i) &amp; pin)&#123;</span><br><span class="line">            <span class="comment">/* clear the specified pin alternate function bits */</span></span><br><span class="line">            afrl &amp;= ~GPIO_AFR_MASK(i);</span><br><span class="line">            afrl |= GPIO_AFR_SET(i,alt_func_num);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">8U</span>;i &lt; <span class="number">16U</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>((<span class="number">1U</span> &lt;&lt; i) &amp; pin)&#123;</span><br><span class="line">            <span class="comment">/* clear the specified pin alternate function bits */</span></span><br><span class="line">            afrh &amp;= ~GPIO_AFR_MASK(i - <span class="number">8U</span>);</span><br><span class="line">            afrh |= GPIO_AFR_SET(i - <span class="number">8U</span>,alt_func_num);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    GPIO_AFSEL0(gpio_periph) = afrl;</span><br><span class="line">    GPIO_AFSEL1(gpio_periph) = afrh;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="alt-func-num-参数"><a href="#alt-func-num-参数" class="headerlink" title="alt_func_num 参数"></a>alt_func_num 参数</h2><p>该参数用来指定 GPIO 的具体用作什么功能。</p>
+<table>
+<thead>
+<tr>
+<th>alt_func_num</th>
+<th align="right">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GPIO_AF_0</td>
+<td align="right">TIMER2, TIMER13, TIMER14, TIMER16, SPI0, I2S0, SPI1, SPI2, I2S2, CK_OUT, SWDIO, SWCLK, USART0, CEC, IFRP, I2C0, I2C1, TSI, EVENTOUT</td>
+</tr>
+<tr>
+<td>GPIO_AF_1</td>
+<td align="right">USART0, USART1, IFRP, CEC, TIMER2, TIMER14, I2C0, I2C1, I2C2, EVENTOUT</td>
+</tr>
+<tr>
+<td>GPIO_AF_2</td>
+<td align="right">TIMER0, TIMER1, TIMER15, TIMER16, EVENTOUT</td>
+</tr>
+<tr>
+<td>GPIO_AF_3</td>
+<td align="right">TSI, I2C0, TIMER14, EVENTOUT</td>
+</tr>
+<tr>
+<td>GPIO_AF_4(port A,B only)</td>
+<td align="right">TIMER13, I2C0, I2C1, I2C2, USART1</td>
+</tr>
+<tr>
+<td>GPIO_AF_5(port A,B only)</td>
+<td align="right">TIMER15, TIMER16, SPI2, I2S2, I2C0, I2C1</td>
+</tr>
+<tr>
+<td>GPIO_AF_6(port A,B only)</td>
+<td align="right">SPI1, EVENTOUT</td>
+</tr>
+<tr>
+<td>GPIO_AF_7(port A only)</td>
+<td align="right">CMP0, CMP1</td>
+</tr>
+<tr>
+<td>GPIO_AF_9(port A,B only)</td>
+<td align="right">CAN0, CAN1 (only for GD32F170&#x2F;F190 series)</td>
+</tr>
+<tr>
+<td>GPIO_AF_11</td>
+<td align="right">SLCD (only for GD32F170&#x2F;F190 series)</td>
+</tr>
+</tbody></table>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">信念D力量</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://zsf90.github.io/2021/12/02/gd32-af-set-function/">https://zsf90.github.io/2021/12/02/gd32-af-set-function/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://zsf90.github.io" target="_blank">信念D力量</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/GD32/">GD32</a></div><div class="post_share"><div class="social-share" data-image="/images/cover/004.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/12/20/emmet/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/0002.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Emmet 语法用法</div></div></a></div><div class="next-post pull-right"><a href="/2021/12/02/gd32-bit-define/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/cover/001.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">GD32库中的位运算宏定义</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/12/02/gd32-bit-define/" title="GD32库中的位运算宏定义"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/cover/001.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-02</div><div class="title">GD32库中的位运算宏定义</div></div></a></div><div><a href="/2021/12/01/gd32-led-blink/" title="GD32F150 驱动双色LED交替闪烁"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/cover/002.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-01</div><div class="title">GD32F150 驱动双色LED交替闪烁</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/z-logo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">信念D力量</div><div class="author-info__description"></div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/zsf90"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://space.bilibili.com/334715750" target="_blank" title="哔哩哔哩"><i class="fab fa-bilibili"></i></a><a class="social-icon" href="mailto:freerealmshn@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://github.com/zsf90" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是我的个人博客</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.</span> <span class="toc-text">函数实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#alt-func-num-%E5%8F%82%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text">alt_func_num 参数</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/04/20/c-language-bcjq/" title="C语言编程技巧"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/cover/009.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言编程技巧"/></a><div class="content"><a class="title" href="/2022/04/20/c-language-bcjq/" title="C语言编程技巧">C语言编程技巧</a><time datetime="2022-04-19T16:05:41.000Z" title="发表于 2022-04-20 00:05:41">2022-04-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/19/hello-world/" title="Hello World"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/0005.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/2022/04/19/hello-world/" title="Hello World">Hello World</a><time datetime="2022-04-19T15:53:22.785Z" title="发表于 2022-04-19 23:53:22">2022-04-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/12/c-language-hash-table/" title="C 语言哈希表"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/cover/008.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C 语言哈希表"/></a><div class="content"><a class="title" href="/2022/04/12/c-language-hash-table/" title="C 语言哈希表">C 语言哈希表</a><time datetime="2022-04-11T17:02:12.000Z" title="发表于 2022-04-12 01:02:12">2022-04-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/11/stm32-ec11-demo/" title="STM32 EC11 旋转编码器软件肖抖示例"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/cover/007.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="STM32 EC11 旋转编码器软件肖抖示例"/></a><div class="content"><a class="title" href="/2022/04/11/stm32-ec11-demo/" title="STM32 EC11 旋转编码器软件肖抖示例">STM32 EC11 旋转编码器软件肖抖示例</a><time datetime="2022-04-10T16:23:47.000Z" title="发表于 2022-04-11 00:23:47">2022-04-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/10/npm-%E5%91%BD%E4%BB%A4%E7%AC%94%E8%AE%B0/" title="npm 命令笔记"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/images/cover/nodejs.svg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="npm 命令笔记"/></a><div class="content"><a class="title" href="/2022/04/10/npm-%E5%91%BD%E4%BB%A4%E7%AC%94%E8%AE%B0/" title="npm 命令笔记">npm 命令笔记</a><time datetime="2022-04-10T06:04:21.000Z" title="发表于 2022-04-10 14:04:21">2022-04-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 信念D力量</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
